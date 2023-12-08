@@ -1,5 +1,5 @@
 [package]
-name = "event_queue"
+name = "generic_event_queue"
 description = "Provides a generic event-queue API."
 version = "0.1.0"
 authors = [

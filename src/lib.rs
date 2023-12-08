@@ -1,16 +1,10 @@
-//! Provides an event system for the engine.
+//! Provides a generic Event-Queue API.
 //!
-//! This module uses a [FIFO](https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics))
+//! This module provides a [FIFO](https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics))
 //! (First-in, First-out), MPSC (Multi-Producer, Single-Consumer) event system based on the
 //! sender / receiver model found in [std::sync::mpsc] (actually, [MpscEventQueue] is
 //! built on the mpsc API.) This module provides traits which wrap up the channel-like
-//! functionality into a nicer API, so other types, like the [EventLoop](crate::EventLoop),
-//! and [Context](crate::Context), can have Event Queue functionality.
-//!
-//! It's important to note, [`EventQueue`] is **not just for events.**  It's actually a generic
-//! message-passing system masquerading as an event system.  It's capable of using any data type
-//! you want to use.  You can absolutely use Event Queues in your game to send any random messages
-//! around.
+//! functionality into a nicer API.
 //!
 //! # Examples
 //!
@@ -19,9 +13,6 @@
 //!
 //! ## Create an Event Queue
 //!
-//! [`MpscEventQueue`] is the main [`EventQueue`] implementation used by the engine, and since
-//! it's simple to set up, we will use it in our examples.
-//!
 //! ```
 //! # use event_queue::*;
 //! # enum EventType { Event };
@@ -29,7 +20,7 @@
 //! let event_queue = MpscEventQueue::<EventType>::new();
 //! ```
 //!
-//! As noted above, you can use any custom data you'd like when creating an Event Queue.
+//! You can use any custom event-type, or data you'd like when creating an Event Queue.
 //! For example, numbers!
 //!
 //! ```
@@ -122,7 +113,7 @@
 //! let event_sender = event_queue.event_sender();
 //! event_sender.send_event(EventType::Event);
 //!
-//! // The clone is sent to another thread.
+//! // The clone is moved to the other thread.
 //! let thread_sender = event_sender.clone();
 //! std::thread::spawn(move || {
 //!     thread_sender.send_event(EventType::Event);

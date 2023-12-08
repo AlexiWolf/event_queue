@@ -1,8 +1,16 @@
 [package]
 name = "event_queue"
+description = "Provides a generic event-queue API."
 version = "0.1.0"
+authors = [
+    "AlexiWolf <alexi@wolvesin.space>", 
+    "Wolven <5ofswords@proton.me>",
+]
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/AlexiWolf/event_queue"
+homepage = "https://github.com/AlexiWolf/event_queue"
+keywords = ["event-system", "event-queue", "mpsc"]
+categories = ["data-structures"]
 
 [dependencies]

@@ -14,7 +14,7 @@
 //! ## Create an Event Queue
 //!
 //! ```
-//! # use event_queue::*;
+//! # use generic_event_queue::*;
 //! # enum EventType { Event };
 //! #
 //! let event_queue = MpscEventQueue::<EventType>::new();
@@ -24,7 +24,7 @@
 //! For example, numbers!
 //!
 //! ```
-//! # use event_queue::*;
+//! # use generic_event_queue::*;
 //! #
 //! let event_queue = MpscEventQueue::<u32>::new();
 //! event_queue.event_sender().send_event(123);
@@ -41,7 +41,7 @@
 //! mutable access, we can use Rust's type system better enforce this restriction
 //!
 //! ```
-//! # use event_queue::*;
+//! # use generic_event_queue::*;
 //! # enum EventType { Event };
 //! # let mut event_queue = MpscEventQueue::<EventType>::new();
 //! #
@@ -59,7 +59,7 @@
 //! side.  
 //!
 //! ```
-//! # use event_queue::*;
+//! # use generic_event_queue::*;
 //! # enum EventType { Event };
 //! # let event_queue = MpscEventQueue::<EventType>::new();
 //! #
@@ -74,7 +74,7 @@
 //! code that otherwise does not have access to the Event Queue.
 //!
 //! ```
-//! # use event_queue::*;
+//! # use generic_event_queue::*;
 //! # enum EventType { Event };
 //! # let event_queue = MpscEventQueue::<EventType>::new();
 //! #
@@ -105,7 +105,7 @@
 //! Event Senders can be safely sent across thread boundaries, even when the Event Queue cannot.
 //!
 //! ```
-//! # use event_queue::*;
+//! # use generic_event_queue::*;
 //! # enum EventType { Event };
 //! # let event_queue = MpscEventQueue::<EventType>::new();
 //! #
@@ -126,7 +126,7 @@
 //! events to be sent directly, without needing to crate an Event Sender.  
 //!
 //! ```
-//! # use event_queue::*;
+//! # use generic_event_queue::*;
 //! # enum EventType { Event };
 //! # let real_event_queue = MpscEventQueue::<EventType>::new();
 //! # // Yes, we're faking it.  
@@ -137,6 +137,6 @@
 //! event_queue.send_event(EventType::Event);
 
 mod event_queue;
-pub use event_queue::*;
+pub use generic_event_queue::*;
 mod mpsc_event_queue;
 pub use mpsc_event_queue::*;

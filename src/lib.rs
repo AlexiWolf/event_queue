@@ -23,7 +23,7 @@
 //! it's simple to set up, we will use it in our examples.
 //!
 //! ```
-//! # use wolf_engine_core::events::*;
+//! # use event_queue::*;
 //! # enum EventType { Event };
 //! #
 //! let event_queue = MpscEventQueue::<EventType>::new();
@@ -33,7 +33,7 @@
 //! For example, numbers!
 //!
 //! ```
-//! # use wolf_engine_core::events::*;
+//! # use event_queue::*;
 //! #
 //! let event_queue = MpscEventQueue::<u32>::new();
 //! event_queue.event_sender().send_event(123);
@@ -50,7 +50,7 @@
 //! mutable access, we can use Rust's type system better enforce this restriction
 //!
 //! ```
-//! # use wolf_engine_core::events::*;
+//! # use event_queue::*;
 //! # enum EventType { Event };
 //! # let mut event_queue = MpscEventQueue::<EventType>::new();
 //! #
@@ -68,7 +68,7 @@
 //! side.  
 //!
 //! ```
-//! # use wolf_engine_core::events::*;
+//! # use event_queue::*;
 //! # enum EventType { Event };
 //! # let event_queue = MpscEventQueue::<EventType>::new();
 //! #
@@ -83,7 +83,7 @@
 //! code that otherwise does not have access to the Event Queue.
 //!
 //! ```
-//! # use wolf_engine_core::events::*;
+//! # use event_queue::*;
 //! # enum EventType { Event };
 //! # let event_queue = MpscEventQueue::<EventType>::new();
 //! #
@@ -114,7 +114,7 @@
 //! Event Senders can be safely sent across thread boundaries, even when the Event Queue cannot.
 //!
 //! ```
-//! # use wolf_engine_core::events::*;
+//! # use event_queue::*;
 //! # enum EventType { Event };
 //! # let event_queue = MpscEventQueue::<EventType>::new();
 //! #
@@ -135,7 +135,7 @@
 //! events to be sent directly, without needing to crate an Event Sender.  
 //!
 //! ```
-//! # use wolf_engine_core::events::*;
+//! # use event_queue::*;
 //! # enum EventType { Event };
 //! # let real_event_queue = MpscEventQueue::<EventType>::new();
 //! # // Yes, we're faking it.  

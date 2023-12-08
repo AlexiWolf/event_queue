@@ -137,6 +137,6 @@
 //! event_queue.send_event(EventType::Event);
 
 mod event_queue;
-pub use generic_event_queue::*;
+pub use event_queue::*;
 mod mpsc_event_queue;
 pub use mpsc_event_queue::*;

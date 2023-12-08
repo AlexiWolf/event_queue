@@ -1,7 +1,7 @@
 use std::sync::mpsc::*;
 use std::sync::Arc;
 
-use crate::events::*;
+use crate::*;
 
 /// Provides an [`EventQueue`] implementation based on [`std::sync::mpsc`].
 ///

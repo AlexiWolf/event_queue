@@ -7,7 +7,7 @@
 A generic event-queue API.
 
 This package was originally crated as part of
-[Wolf Engine's](https://crates.io/crates/wolf_engine) event-handling system, 
+[Wolf Engine](https://crates.io/crates/wolf_engine)'s event-handling system, 
 but it's proven useful in other projects.  I decided to make it into a 
 stand-alone crate, after copy-pasting it into multiple projects.
 

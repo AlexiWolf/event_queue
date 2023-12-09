@@ -1,8 +1,8 @@
 # Event Queue 
 
 [![CI](https://github.com/AlexiWolf/event_queue/actions/workflows/ci.yml/badge.svg)](https://github.com/AlexiWolf/event_queue/actions/workflows/ci.yml)
-[![Crates.io](https://img.shields.io/crates/l/event_queue)](https://github.com/AlexiWolf/event_queue#license)
-[![Crates.io](https://img.shields.io/crates/v/event_queue)](https://crates.io/crates/event_queue)
+[![Crates.io](https://img.shields.io/crates/l/generic_event_queue)](https://github.com/AlexiWolf/event_queue#license)
+[![Crates.io](https://img.shields.io/crates/v/generic_event_queue)](https://crates.io/crates/generic_event_queue)
 
 A generic event-queue API.
 

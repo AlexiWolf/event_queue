@@ -1,4 +1,4 @@
-# Event Queue 
+# Generic Event Queue 
 
 [![CI](https://github.com/AlexiWolf/event_queue/actions/workflows/ci.yml/badge.svg)](https://github.com/AlexiWolf/event_queue/actions/workflows/ci.yml)
 [![Crates.io](https://img.shields.io/crates/l/generic_event_queue)](https://github.com/AlexiWolf/event_queue#license)
@@ -6,14 +6,37 @@
 
 A generic event-queue API.
 
+## Getting Started
+
+To use the latest release version:
+
+```TOML
+# Cargo.toml
+
+[dependencies]
+generic_event_queue = "*"
+```
+
+To use the latest development version:
+
+```TOML
+# Cargo.toml
+
+[dependencies]
+generic_event_queue = { git = "https://github.com/AlexiWolf/generic_event_queue" }
+```
+
+[See the docs](https://docs.rs/generic_event_queue/latest/generic_event_queue/)
+for usage instructions.
+
 ## Status
 
-Event Queue is currently in development.  You should expect missing features, 
-bugs, changing APIs, and other spooky stuff until release 1.0.
+Generic Event Queue is currently in development.  You should expect missing 
+features, bugs, changing APIs, and other spooky stuff until release 1.0.
 
 # License
 
-Event Queue is licensed under either:
+Generic Event Queue is licensed under either:
 
 - [Apache License, Version 2.0](LICENSE-APACHE)
 - [MIT License](LICENSE-MIT)

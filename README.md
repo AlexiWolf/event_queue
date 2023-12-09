@@ -6,7 +6,7 @@
 
 A generic event-queue API.
 
-The Event-Queue API in this crate was originally crated as part of
+This package was originally crated as part of
 [Wolf Engine's](https://crates.io/crates/wolf_engine) event-handling system, 
 but it's proven useful in other projects.  I decided to make it into a 
 stand-alone crate, after copy-pasting it into multiple projects.

@@ -1,15 +1,13 @@
 //! Provides a generic Event-Queue API.
 //!
 //! This module provides a [FIFO](https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics))
-//! (First-in, First-out), MPSC (Multi-Producer, Single-Consumer) event system based on the
-//! sender / receiver model found in [std::sync::mpsc] (actually, [MpscEventQueue] is
-//! built on the mpsc API.) This module provides traits which wrap up the channel-like
-//! functionality into a nicer API.
+//! (First-in, First-out) event system based on the sender / receiver / message channel model
+//! found in [std::sync::mpsc].
 //!
 //! # Examples
 //!
 //! All event queues use the same API, so the following examples should work for any type
-//! implementing the [`EventQueue`] traits.  
+//! implementing the Event-Queue traits.  
 //!
 //! ## Create an Event Queue
 //!
@@ -17,35 +15,26 @@
 //! # use generic_event_queue::*;
 //! # enum EventType { Event };
 //! #
-//! let event_queue = MpscEventQueue::<EventType>::new();
-//! ```
-//!
-//! You can use any custom event-type, or data you'd like when creating an Event Queue.
-//! For example, numbers!
-//!
-//! ```
-//! # use generic_event_queue::*;
+//! let (event_sender, event_receiver) = mpsc::event_queue();
 //! #
-//! let event_queue = MpscEventQueue::<u32>::new();
-//! event_queue.event_sender().send_event(123);
+//! # event_sender.send_event(123);
 //! ```
 //!
 //! ## Handling Events
 //!
-//! An [`EventQueue`] will collect incoming events, and store them until they are ready to be
-//! processed.  The order of incoming events is always preserved, and they come out in the same
-//! order they came in.  (FIFO, remember?)
+//! An [`EventReceiver`] will collect incoming events, and store them until they are ready to be
+//! processed.  The order of incoming events is always preserved.
 //!
 //! Queued events are queried in a loop.  Querying events requires you have mutable access to the
-//! Event Queue, as the Single-Consumer model can only have *one* event consumer.  By requiring
-//! mutable access, we can use Rust's type system better enforce this restriction
+//! Event Queue.
 //!
 //! ```
 //! # use generic_event_queue::*;
 //! # enum EventType { Event };
-//! # let mut event_queue = MpscEventQueue::<EventType>::new();
 //! #
-//! while let Some(event) = event_queue.next_event() {
+//! # let (event_sender, mut event_receiver) = mpsc::event_queue::<EventType>();
+//! #
+//! while let Some(event) = event_receiver.next_event() {
 //!     match event {
 //!         EventType::Event => (), // Handle the event.
 //!     }
@@ -54,17 +43,15 @@
 //!
 //! ## Sending Events
 //!
-//! When we want to send an event to an [`EventQueue`], we use an [`EventSender`].  An event
-//! sender is like a tunnel, through which you can send data, and it will pop out on the other
-//! side.  
+//! To send an event to an [`EventReceiver`], we use an [`EventSender`].  An event sender is like
+//! a tunnel, through which you can send data, and it will pop out on the other side.  
 //!
 //! ```
 //! # use generic_event_queue::*;
 //! # enum EventType { Event };
-//! # let event_queue = MpscEventQueue::<EventType>::new();
+//! # let (event_sender, event_receiver) = mpsc::event_queue();
 //! #
-//! let event_sender = event_queue.event_sender();
-//! event_sender.send_event(EventType::Event); // Event is sent back to the EventQueue.
+//! event_sender.send_event(EventType::Event);
 //! ```
 //!
 //! ### Cloning, and Transferring Ownership of an `EventSender`
@@ -75,26 +62,26 @@
 //!
 //! ```
 //! # use generic_event_queue::*;
+//! # #[derive(Clone)]
 //! # enum EventType { Event };
-//! # let event_queue = MpscEventQueue::<EventType>::new();
 //! #
 //! # struct SomeOtherType {
-//! #     pub event_sender: std::sync::Arc<dyn EventSender<EventType>>,
+//! #     pub event_sender: mpsc::MpscEventSender<EventType>,
 //! # }
 //! #
 //! # impl SomeOtherType {
-//! #   fn new(event_sender: std::sync::Arc<dyn EventSender<EventType>>) -> Self {
+//! #   fn new(event_sender: mpsc::MpscEventSender<EventType>) -> Self {
 //! #       Self { event_sender }
 //! #   }
 //! # }
 //! #
-//! # fn some_other_function(event_sender: std::sync::Arc<dyn EventSender<EventType>>) {}
+//! # fn some_other_function(event_sender: &mpsc::MpscEventSender<EventType>) {}
 //! #
-//! let event_sender = event_queue.event_sender();
-//!
+//! # let (event_sender, event_receiver) = mpsc::event_queue();
+//! #
 //! // The EventSender can be cloned, and freely passed around.
 //! let other_type = SomeOtherType::new(event_sender.clone());
-//! some_other_function(event_sender.clone());
+//! some_other_function(&event_sender);
 //!
 //! // The original EventSender is unaffected.
 //! event_sender.send_event(EventType::Event);
@@ -102,15 +89,14 @@
 //!
 //! ### Sending an `EventSender` to Another Thread
 //!
-//! Event Senders can be safely sent across thread boundaries, even when the Event Queue cannot.
+//! Event Senders can be safely sent to other threads.
 //!
 //! ```
 //! # use generic_event_queue::*;
 //! # enum EventType { Event };
-//! # let event_queue = MpscEventQueue::<EventType>::new();
+//! # let (event_sender, event_receiver) = mpsc::event_queue();
 //! #
-//! // This EventSender stays on the main thread with the EventQueue.
-//! let event_sender = event_queue.event_sender();
+//! // This EventSender stays on the main thread with the EventReceiver.
 //! event_sender.send_event(EventType::Event);
 //!
 //! // The clone is moved to the other thread.
@@ -119,24 +105,8 @@
 //!     thread_sender.send_event(EventType::Event);
 //! }).join();
 //! ```
-//!
-//! ### Sending Events Directly to the `EventQueue`
-//!
-//! Some [`EventQueue`] implementations may, themselves, also implement [`EventSender`], to allow
-//! events to be sent directly, without needing to crate an Event Sender.  
-//!
-//! ```
-//! # use generic_event_queue::*;
-//! # enum EventType { Event };
-//! # let real_event_queue = MpscEventQueue::<EventType>::new();
-//! # // Yes, we're faking it.  
-//! # // I'm *far* to lazy to init a real example, and it's no different to the reader, so
-//! # // it'll just be our little secret.
-//! # let event_queue = real_event_queue.event_sender(); // >;3
-//! #
-//! event_queue.send_event(EventType::Event);
 
 mod event_queue;
 pub use event_queue::*;
-mod mpsc_event_queue;
-pub use mpsc_event_queue::*;
+
+pub mod mpsc;

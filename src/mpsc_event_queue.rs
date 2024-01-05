@@ -25,7 +25,7 @@ impl<E: 'static> EventQueue<E> for MpscEventQueue<E> {
     }
 }
 
-struct MpscEventSender<E> {
+pub struct MpscEventSender<E> {
     inner: Sender<E>,
 }
 

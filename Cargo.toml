@@ -1,7 +1,7 @@
 [package]
 name = "generic_event_queue"
 description = "Provides a generic event-queue API."
-version = "0.1.0"
+version = "0.2.0"
 authors = [
     "AlexiWolf <alexi@wolvesin.space>", 
     "Wolven <5ofswords@proton.me>",

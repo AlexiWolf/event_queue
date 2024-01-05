@@ -22,17 +22,6 @@
 //! # event_sender.send_event(123);
 //! ```
 //!
-//! You can use any custom event-type, or data you'd like when creating an Event Queue.
-//! For example, numbers!
-//!
-//! ```
-//! # use generic_event_queue::*;
-//! #
-//! let (event_sender, event_receiver) = mpsc_event_queue();
-//! #
-//! # event_sender.send_event(123);
-//! ```
-//!
 //! ## Handling Events
 //!
 //! An [`EventReceiver`] will collect incoming events, and store them until they are ready to be

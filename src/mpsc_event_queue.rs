@@ -30,12 +30,6 @@ pub struct MpscEventSender<E> {
 unsafe impl<E> Send for MpscEventSender<E> {}
 unsafe impl<E> Sync for MpscEventSender<E> {}
 
-impl<E> From<Sender<E>> for MpscEventSender<E> {
-    fn from(sender: Sender<E>) -> Self {
-        Self { inner: sender }
-    }
-}
-
 impl<E> EventSender<E> for MpscEventSender<E> {
     fn send_event(&self, event: E) -> Result<(), String> {
         match self.inner.send(event) {

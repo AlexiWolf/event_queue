@@ -16,4 +16,13 @@ pub trait EventSender<E>: Send + Sync {
     fn send_event(&self, event: E) -> Result<(), ReceiverDroppedError>;
 }
 
+#[derive(Debug, Eq, PartialEq, Copy, Clone)]
+pub struct ReceiverDroppedError;
 
+impl std::error::Error for ReceiverDroppedError {}
+
+impl std::fmt::Display for ReceiverDroppedError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Failed to send the event, because the receiver was dropped.")
+    }
+}

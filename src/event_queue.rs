@@ -8,5 +8,9 @@ pub trait EventReceiver<E> {
 ///
 /// Event Senders can be freely, and safely cloned, given away, and even sent across threads.
 pub trait EventSender<E>: Send + Sync {
-    fn send_event(&self, event: E) -> Result<(), String>;
+    /// Sends an event to the receiver.  
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if the receiver has been dropped.
 }

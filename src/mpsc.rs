@@ -4,7 +4,7 @@ use std::sync::mpsc::*;
 
 use crate::*;
 
-/// Creates a sender / receiver pair based on 
+/// Creates a new mpsc sender / receiver pair.
 pub fn event_queue<E>() -> (MpscEventSender<E>, MpscEventReceiver<E>) {
     let (sender, receiver) = channel();
     let sender = MpscEventSender { inner: sender };

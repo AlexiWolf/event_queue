@@ -3,7 +3,7 @@ use std::sync::mpsc::*;
 use crate::*;
 
 /// Creates a sender / receiver pair based on 
-pub fn mpsc_event_queue<E>() -> (MpscEventSender<E>, MpscEventReceiver<E>) {
+pub fn event_queue<E>() -> (MpscEventSender<E>, MpscEventReceiver<E>) {
     let (sender, receiver) = channel();
     let sender = MpscEventSender { inner: sender };
     let receiver = MpscEventReceiver { inner: receiver };

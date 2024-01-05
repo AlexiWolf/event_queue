@@ -2,21 +2,18 @@ use std::sync::mpsc::*;
 
 use crate::*;
 
+pub fn mpsc_event_queue<E>() -> (MpscEventSender<E>, MpscEventReceiver<E>) {
+    let (sender, receiver) = channel();
+    let sender = MpscEventSender { inner: sender };
+    let receiver = MpscEventReceiver { receiver };
+    (sender, receiver)
+}
+
 /// Provides an [`EventQueue`] implementation based on [`std::sync::mpsc`].
 ///
 /// This type is used entirely through the [`EventQueue`] trait interfaces.
 pub struct MpscEventReceiver<E> {
     receiver: Receiver<E>,
-}
-
-impl<E> MpscEventReceiver<E> {
-    /// Creates a new event queue.
-    pub fn new() -> (MpscEventSender<E>, Self) {
-        let (sender, receiver) = channel();
-        let sender = MpscEventSender::from(sender);
-        let receiver = Self { receiver };
-        (sender, receiver)
-    }
 }
 
 impl<E: 'static> EventQueue<E> for MpscEventReceiver<E> {

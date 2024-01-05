@@ -66,16 +66,16 @@
 //! # enum EventType { Event };
 //! #
 //! # struct SomeOtherType {
-//! #     pub event_sender: MpscEventSender<EventType>,
+//! #     pub event_sender: mpsc::MpscEventSender<EventType>,
 //! # }
 //! #
 //! # impl SomeOtherType {
-//! #   fn new(event_sender: MpscEventSender<EventType>) -> Self {
+//! #   fn new(event_sender: mpsc::MpscEventSender<EventType>) -> Self {
 //! #       Self { event_sender }
 //! #   }
 //! # }
 //! #
-//! # fn some_other_function(event_sender: &MpscEventSender<EventType>) {}
+//! # fn some_other_function(event_sender: &mpsc::MpscEventSender<EventType>) {}
 //! #
 //! let (event_sender, event_receiver) = mpsc::event_queue();
 //!

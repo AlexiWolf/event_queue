@@ -91,7 +91,7 @@
 //! #   }
 //! # }
 //! #
-//! # fn some_other_function(event_sender: MpscEventSender<EventType>) {}
+//! # fn some_other_function(event_sender: &MpscEventSender<EventType>) {}
 //! #
 //! let (event_sender, event_receiver) = mpsc_event_queue();
 //!

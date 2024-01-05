@@ -108,5 +108,5 @@
 
 mod event_queue;
 pub use event_queue::*;
-mod mpsc_event_queue;
-pub use mpsc_event_queue::*;
+
+pub mod mpsc;

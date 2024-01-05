@@ -5,7 +5,7 @@ use crate::*;
 pub fn mpsc_event_queue<E>() -> (MpscEventSender<E>, MpscEventReceiver<E>) {
     let (sender, receiver) = channel();
     let sender = MpscEventSender { inner: sender };
-    let receiver = MpscEventReceiver { receiver };
+    let receiver = MpscEventReceiver { inner: receiver };
     (sender, receiver)
 }
 
@@ -13,12 +13,12 @@ pub fn mpsc_event_queue<E>() -> (MpscEventSender<E>, MpscEventReceiver<E>) {
 ///
 /// This type is used entirely through the [`EventQueue`] trait interfaces.
 pub struct MpscEventReceiver<E> {
-    receiver: Receiver<E>,
+    inner: Receiver<E>,
 }
 
 impl<E: 'static> EventQueue<E> for MpscEventReceiver<E> {
     fn next_event(&mut self) -> Option<E> {
-        self.receiver.try_recv().ok()
+        self.inner.try_recv().ok()
     }
 }
 

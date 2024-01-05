@@ -1,3 +1,5 @@
+//! Provides a Multi-Producer, Single-Consumer Event-Queue implementation.
+
 use std::sync::mpsc::*;
 
 use crate::*;

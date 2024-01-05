@@ -25,20 +25,20 @@ impl<E: 'static> EventQueue<E> for MpscEventQueue<E> {
     }
 }
 
-struct MpscEventQueueSender<E> {
+struct MpscEventSender<E> {
     inner: Sender<E>,
 }
 
-unsafe impl<E> Send for MpscEventQueueSender<E> {}
-unsafe impl<E> Sync for MpscEventQueueSender<E> {}
+unsafe impl<E> Send for MpscEventSender<E> {}
+unsafe impl<E> Sync for MpscEventSender<E> {}
 
-impl<E> From<Sender<E>> for MpscEventQueueSender<E> {
+impl<E> From<Sender<E>> for MpscEventSender<E> {
     fn from(sender: Sender<E>) -> Self {
         Self { inner: sender }
     }
 }
 
-impl<E> EventSender<E> for MpscEventQueueSender<E> {
+impl<E> EventSender<E> for MpscEventSender<E> {
     fn send_event(&self, event: E) -> Result<(), String> {
         match self.inner.send(event) {
             Ok(_) => Ok(()),

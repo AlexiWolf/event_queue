@@ -16,7 +16,7 @@ pub struct MpscEventReceiver<E> {
     inner: Receiver<E>,
 }
 
-impl<E: 'static> EventQueue<E> for MpscEventReceiver<E> {
+impl<E: 'static> EventReceiver<E> for MpscEventReceiver<E> {
     fn next_event(&mut self) -> Option<E> {
         self.inner.try_recv().ok()
     }

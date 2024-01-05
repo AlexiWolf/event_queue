@@ -25,12 +25,6 @@ impl<E: 'static> EventQueue<E> for MpscEventQueue<E> {
     }
 }
 
-impl<E> Default for MpscEventQueue<E> {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
 struct MpscEventQueueSender<E> {
     inner: Sender<E>,
 }

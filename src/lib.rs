@@ -9,7 +9,7 @@
 //! # Examples
 //!
 //! All event queues use the same API, so the following examples should work for any type
-//! implementing the [`EventQueue`] traits.  
+//! implementing the Event-Queue traits.  
 //!
 //! ## Create an Event Queue
 //!
@@ -35,7 +35,7 @@
 //!
 //! ## Handling Events
 //!
-//! An [`EventQueue`] will collect incoming events, and store them until they are ready to be
+//! An [`EventReceiver`] will collect incoming events, and store them until they are ready to be
 //! processed.  The order of incoming events is always preserved, and they come out in the same
 //! order they came in.  (FIFO, remember?)
 //!
@@ -58,16 +58,15 @@
 //!
 //! ## Sending Events
 //!
-//! When we want to send an event to an [`EventQueue`], we use an [`EventSender`].  An event
-//! sender is like a tunnel, through which you can send data, and it will pop out on the other
-//! side.  
+//! To send an event to an [`EventReceiver`], we use an [`EventSender`].  An event sender is like 
+//! a tunnel, through which you can send data, and it will pop out on the other side.  
 //!
 //! ```
 //! # use generic_event_queue::*;
 //! # enum EventType { Event };
 //! # let (event_sender, event_receiver) = mpsc_event_queue(); 
 //! #
-//! event_sender.send_event(EventType::Event); // Event is sent back to the EventQueue.
+//! event_sender.send_event(EventType::Event); // Event is sent back to the receiver.
 //! ```
 //!
 //! ### Cloning, and Transferring Ownership of an `EventSender`
@@ -112,7 +111,7 @@
 //! # enum EventType { Event };
 //! # let (event_sender, event_receiver) = mpsc_event_queue();
 //! #
-//! // This EventSender stays on the main thread with the EventQueue.
+//! // This EventSender stays on the main thread with the EventReceiver.
 //! event_sender.send_event(EventType::Event);
 //!
 //! // The clone is moved to the other thread.

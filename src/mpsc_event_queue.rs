@@ -27,6 +27,8 @@ pub struct MpscEventSender<E> {
     inner: Sender<E>,
 }
 
+// **SAFETY:** This type is backed by `std::sync::mpsc::Sender`, which is `Send` / `Sync`, so, by
+// extensions, this type is also safe to be `Send` / `Sync`.
 unsafe impl<E> Send for MpscEventSender<E> {}
 unsafe impl<E> Sync for MpscEventSender<E> {}
 

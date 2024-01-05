@@ -15,7 +15,7 @@
 //! # use generic_event_queue::*;
 //! # enum EventType { Event };
 //! #
-//! let (event_sender, event_receiver) = mpsc_event_queue();
+//! let (event_sender, event_receiver) = mpsc::event_queue();
 //! #
 //! # event_sender.send_event(123);
 //! ```
@@ -32,7 +32,7 @@
 //! # use generic_event_queue::*;
 //! # enum EventType { Event };
 //! #
-//! # let (event_sender, mut event_receiver) = mpsc_event_queue::<EventType>();
+//! # let (event_sender, mut event_receiver) = mpsc::event_queue::<EventType>();
 //! #
 //! while let Some(event) = event_receiver.next_event() {
 //!     match event {
@@ -49,7 +49,7 @@
 //! ```
 //! # use generic_event_queue::*;
 //! # enum EventType { Event };
-//! # let (event_sender, event_receiver) = mpsc_event_queue(); 
+//! # let (event_sender, event_receiver) = mpsc::event_queue(); 
 //! #
 //! event_sender.send_event(EventType::Event);
 //! ```
@@ -77,7 +77,7 @@
 //! #
 //! # fn some_other_function(event_sender: &MpscEventSender<EventType>) {}
 //! #
-//! let (event_sender, event_receiver) = mpsc_event_queue();
+//! let (event_sender, event_receiver) = mpsc::event_queue();
 //!
 //! // The EventSender can be cloned, and freely passed around.
 //! let other_type = SomeOtherType::new(event_sender.clone());
@@ -94,7 +94,7 @@
 //! ```
 //! # use generic_event_queue::*;
 //! # enum EventType { Event };
-//! # let (event_sender, event_receiver) = mpsc_event_queue();
+//! # let (event_sender, event_receiver) = mpsc::event_queue();
 //! #
 //! // This EventSender stays on the main thread with the EventReceiver.
 //! event_sender.send_event(EventType::Event);

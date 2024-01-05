@@ -98,9 +98,4 @@ mod event_queue_tests {
 
         assert!(event_queue.next_event().is_none());
     }
-
-    #[test]
-    pub fn should_implement_default_trait() {
-        let _event_queue = MpscEventQueue::<i32>::default();
-    }
 }

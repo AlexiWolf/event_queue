@@ -40,10 +40,10 @@ unsafe impl<E> Send for MpscEventSender<E> {}
 unsafe impl<E> Sync for MpscEventSender<E> {}
 
 impl<E> EventSender<E> for MpscEventSender<E> {
-    fn send_event(&self, event: E) -> Result<(), String> {
+    fn send_event(&self, event: E) -> Result<(), ReceiverDroppedError> {
         match self.inner.send(event) {
             Ok(_) => Ok(()),
-            Err(error) => Err(error.to_string()),
+            Err(_) => Err(ReceiverDroppedError),
         }
     }
 }

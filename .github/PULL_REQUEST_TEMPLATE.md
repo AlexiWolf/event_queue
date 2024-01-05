@@ -16,5 +16,6 @@ can be accepted.
 
 - [ ] New behaviors are covered by tests, and / or examples.
 - [ ] The documentation has been updated (if applicable.)
+- [ ] The `CHANGELOG.md` file has been updated (if applicable.)
 - [ ] The version number has been bumped (if applicable.)
 - [ ] The feature branch is up to date with `main`. 

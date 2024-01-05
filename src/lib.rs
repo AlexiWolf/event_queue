@@ -1,7 +1,7 @@
 //! Provides a generic Event-Queue API.
 //!
 //! This module provides a [FIFO](https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics))
-//! (First-in, First-out) event system based on the sender / receiver / message channel model 
+//! (First-in, First-out) event system based on the sender / receiver / message channel model
 //! found in [std::sync::mpsc].
 //!
 //! # Examples
@@ -43,13 +43,13 @@
 //!
 //! ## Sending Events
 //!
-//! To send an event to an [`EventReceiver`], we use an [`EventSender`].  An event sender is like 
+//! To send an event to an [`EventReceiver`], we use an [`EventSender`].  An event sender is like
 //! a tunnel, through which you can send data, and it will pop out on the other side.  
 //!
 //! ```
 //! # use generic_event_queue::*;
 //! # enum EventType { Event };
-//! # let (event_sender, event_receiver) = mpsc::event_queue(); 
+//! # let (event_sender, event_receiver) = mpsc::event_queue();
 //! #
 //! event_sender.send_event(EventType::Event);
 //! ```
@@ -89,7 +89,7 @@
 //!
 //! ### Sending an `EventSender` to Another Thread
 //!
-//! Event Senders can be safely sent to other threads. 
+//! Event Senders can be safely sent to other threads.
 //!
 //! ```
 //! # use generic_event_queue::*;

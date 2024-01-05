@@ -12,7 +12,7 @@ pub fn event_queue<E>() -> (MpscEventSender<E>, MpscEventReceiver<E>) {
     (sender, receiver)
 }
 
-/// Provides the [`EventReceiver`] half of the event queue created by [`event_queue()`]. 
+/// Provides the [`EventReceiver`] half of the event queue created by [`event_queue()`].
 pub struct MpscEventReceiver<E> {
     inner: Receiver<E>,
 }
@@ -23,14 +23,16 @@ impl<E: 'static> EventReceiver<E> for MpscEventReceiver<E> {
     }
 }
 
-/// Provides the [`EventSender`] half of the event queue created by [`event_queue()`]. 
+/// Provides the [`EventSender`] half of the event queue created by [`event_queue()`].
 pub struct MpscEventSender<E> {
     inner: Sender<E>,
 }
 
 impl<E> Clone for MpscEventSender<E> {
     fn clone(&self) -> Self {
-        Self { inner: self.inner.clone() }
+        Self {
+            inner: self.inner.clone(),
+        }
     }
 }
 
@@ -83,7 +85,7 @@ mod event_queue_tests {
 
     #[test]
     pub fn should_flush_empty_list_if_there_are_no_events() {
-        let (_event_sender, mut event_queue) = event_queue::<i32>(); 
+        let (_event_sender, mut event_queue) = event_queue::<i32>();
 
         assert!(event_queue.next_event().is_none());
     }

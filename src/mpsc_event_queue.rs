@@ -7,15 +7,16 @@ use crate::*;
 ///
 /// This type is used entirely through the [`EventQueue`] trait interfaces.
 pub struct MpscEventQueue<E> {
-    sender: Sender<E>,
     receiver: Receiver<E>,
 }
 
 impl<E> MpscEventQueue<E> {
     /// Creates a new event queue.
-    pub fn new() -> Self {
+    pub fn new() -> (MpscEventSender<E>, Self) {
         let (sender, receiver) = channel();
-        Self { sender, receiver }
+        let sender = MpscEventSender::from(sender);
+        let receiver = Self { receiver };
+        (sender, receiver)
     }
 }
 

@@ -13,4 +13,7 @@ pub trait EventSender<E>: Send + Sync {
     /// # Errors
     ///
     /// Returns an error if the receiver has been dropped.
+    fn send_event(&self, event: E) -> Result<(), ReceiverDroppedError>;
 }
+
+

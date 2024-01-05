@@ -77,8 +77,8 @@
 //! #
 //! # fn some_other_function(event_sender: &mpsc::MpscEventSender<EventType>) {}
 //! #
-//! let (event_sender, event_receiver) = mpsc::event_queue();
-//!
+//! # let (event_sender, event_receiver) = mpsc::event_queue();
+//! #
 //! // The EventSender can be cloned, and freely passed around.
 //! let other_type = SomeOtherType::new(event_sender.clone());
 //! some_other_function(&event_sender);

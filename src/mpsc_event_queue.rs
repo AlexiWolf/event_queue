@@ -22,9 +22,14 @@ impl<E: 'static> EventQueue<E> for MpscEventReceiver<E> {
     }
 }
 
-#[derive(Clone)]
 pub struct MpscEventSender<E> {
     inner: Sender<E>,
+}
+
+impl<E> Clone for MpscEventSender<E> {
+    fn clone(&self) -> Self {
+        Self { inner: self.inner.clone() }
+    }
 }
 
 // **SAFETY:** This type is backed by `std::sync::mpsc::Sender`, which is `Send` / `Sync`, so, by

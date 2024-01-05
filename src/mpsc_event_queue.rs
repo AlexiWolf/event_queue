@@ -5,11 +5,11 @@ use crate::*;
 /// Provides an [`EventQueue`] implementation based on [`std::sync::mpsc`].
 ///
 /// This type is used entirely through the [`EventQueue`] trait interfaces.
-pub struct MpscEventQueue<E> {
+pub struct MpscEventReceiver<E> {
     receiver: Receiver<E>,
 }
 
-impl<E> MpscEventQueue<E> {
+impl<E> MpscEventReceiver<E> {
     /// Creates a new event queue.
     pub fn new() -> (MpscEventSender<E>, Self) {
         let (sender, receiver) = channel();
@@ -19,7 +19,7 @@ impl<E> MpscEventQueue<E> {
     }
 }
 
-impl<E: 'static> EventQueue<E> for MpscEventQueue<E> {
+impl<E: 'static> EventQueue<E> for MpscEventReceiver<E> {
     fn next_event(&mut self) -> Option<E> {
         self.receiver.try_recv().ok()
     }
@@ -56,7 +56,7 @@ mod event_queue_tests {
 
     #[test]
     pub fn should_send_and_receive_events() {
-        let (event_sender, mut event_queue) = MpscEventQueue::new();
+        let (event_sender, mut event_queue) = MpscEventReceiver::new();
 
         event_sender.send_event(0).unwrap();
 
@@ -65,7 +65,7 @@ mod event_queue_tests {
 
     #[test]
     pub fn should_send_events_and_receive_events_across_threads() {
-        let (event_sender, mut event_queue) = MpscEventQueue::new();
+        let (event_sender, mut event_queue) = MpscEventReceiver::new();
 
         event_sender.send_event(0).unwrap();
         let thread_sender = event_sender.clone();
@@ -83,7 +83,7 @@ mod event_queue_tests {
 
     #[test]
     pub fn should_flush_empty_list_if_there_are_no_events() {
-        let (_event_sender, mut event_queue) = MpscEventQueue::<u32>::new();
+        let (_event_sender, mut event_queue) = MpscEventReceiver::<u32>::new();
 
         assert!(event_queue.next_event().is_none());
     }

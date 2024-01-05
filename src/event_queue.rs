@@ -16,6 +16,8 @@ pub trait EventSender<E>: Send + Sync {
     fn send_event(&self, event: E) -> Result<(), ReceiverDroppedError>;
 }
 
+/// An error indicating the [`EventReceiver`] associated with an [`EventSender`] has been dropped,
+/// and there is nowhere to send events.
 #[derive(Debug, Eq, PartialEq, Copy, Clone)]
 pub struct ReceiverDroppedError;
 

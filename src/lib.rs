@@ -23,12 +23,10 @@
 //! ## Handling Events
 //!
 //! An [`EventReceiver`] will collect incoming events, and store them until they are ready to be
-//! processed.  The order of incoming events is always preserved, and they come out in the same
-//! order they came in.  (FIFO, remember?)
+//! processed.  The order of incoming events is always preserved.
 //!
 //! Queued events are queried in a loop.  Querying events requires you have mutable access to the
-//! Event Queue, as the Single-Consumer model can only have *one* event consumer.  By requiring
-//! mutable access, we can use Rust's type system better enforce this restriction
+//! Event Queue.
 //!
 //! ```
 //! # use generic_event_queue::*;
@@ -53,7 +51,7 @@
 //! # enum EventType { Event };
 //! # let (event_sender, event_receiver) = mpsc_event_queue(); 
 //! #
-//! event_sender.send_event(EventType::Event); // Event is sent back to the receiver.
+//! event_sender.send_event(EventType::Event);
 //! ```
 //!
 //! ### Cloning, and Transferring Ownership of an `EventSender`
@@ -91,7 +89,7 @@
 //!
 //! ### Sending an `EventSender` to Another Thread
 //!
-//! Event Senders can be safely sent across thread boundaries, even when the Event Queue cannot.
+//! Event Senders can be safely sent to other threads. 
 //!
 //! ```
 //! # use generic_event_queue::*;

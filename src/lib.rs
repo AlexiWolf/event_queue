@@ -1,10 +1,8 @@
 //! Provides a generic Event-Queue API.
 //!
 //! This module provides a [FIFO](https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics))
-//! (First-in, First-out), MPSC (Multi-Producer, Single-Consumer) event system based on the
-//! sender / receiver model found in [std::sync::mpsc] (actually, [MpscEventReceiver] is
-//! built on the mpsc API.) This module provides traits which wrap up the channel-like
-//! functionality into a nicer API.
+//! (First-in, First-out) event system based on the sender / receiver / message channel model 
+//! found in [std::sync::mpsc].
 //!
 //! # Examples
 //!

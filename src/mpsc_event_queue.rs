@@ -25,12 +25,6 @@ impl<E: 'static> EventQueue<E> for MpscEventQueue<E> {
     }
 }
 
-impl<E: 'static> HasEventSender<E> for MpscEventQueue<E> {
-    fn event_sender(&self) -> Arc<dyn EventSender<E>> {
-        Arc::from(MpscEventQueueSender::from(self.sender.clone()))
-    }
-}
-
 impl<E> Default for MpscEventQueue<E> {
     fn default() -> Self {
         Self::new()

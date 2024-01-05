@@ -10,7 +10,7 @@ pub fn event_queue<E>() -> (MpscEventSender<E>, MpscEventReceiver<E>) {
     (sender, receiver)
 }
 
-/// Provides the [`EventReceiver`] half of the event queue created by [`mpsc_event_queue()`]. 
+/// Provides the [`EventReceiver`] half of the event queue created by [`event_queue()`]. 
 pub struct MpscEventReceiver<E> {
     inner: Receiver<E>,
 }
@@ -21,7 +21,7 @@ impl<E: 'static> EventReceiver<E> for MpscEventReceiver<E> {
     }
 }
 
-/// Provides the [`EventSender`] half of the event queue created by [`mpsc_event_queue()`]. 
+/// Provides the [`EventSender`] half of the event queue created by [`event_queue()`]. 
 pub struct MpscEventSender<E> {
     inner: Sender<E>,
 }
